@@ -7,7 +7,7 @@
 
 <div class="flex flex-grow flex-col p-10">
     <div class="bg-transparent rounded-2xl shadow-lg shadow-slate-800 relative flex border-2 border-dashed border-slate-500 flex-grow">
-        <div class="bg-slate-950 p-4 w-1/6 rounded-l-2xl border-r-2 border-dashed border-slate-500">
+        <div class="bg-slate-950 p-4 w-1/2 lg:w-1/6 rounded-l-2xl border-r-2 border-dashed border-slate-500">
             <ul>
                 <li class="text-slate-500 font-bold uppercase text-sm pt-3 mb-3 border-b border-dashed border-slate-500 border-opacity-45 pb-1 ">Super Campeões</li>
                 {{ $users }}

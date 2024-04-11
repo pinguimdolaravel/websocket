@@ -23,12 +23,22 @@ $save = function () {
     }
     auth()->user()->messages()->create(['message' => $this->message]);
 
-    // dispatch event
+    ChatMessageCreatedEvent::dispatch();
+
     $this->reset('message');
 };
 
-// listeners and handlers
+$here = fn($whoIsHere) => $this->whoIsHere = $whoIsHere;
+$joining = fn($whoIsJoining) => $this->whoIsHere [] = $whoIsJoining;
+$leaving = fn($whoIsLeaving) => $this->whoIsHere = array_filter($this->whoIsHere, fn($i) => $i['id'] != $whoIsLeaving['id']);
 
+
+on([
+    'echo-private:chat,ChatMessageCreatedEvent' => '$refresh',
+    'echo-presence:chat,here' => 'here',
+    'echo-presence:chat,joining' => 'joining',
+    'echo-presence:chat,leaving' => 'leaving',
+]);
 ?>
 
 <x-chat>
