@@ -58,7 +58,11 @@ on([
         <div x-data="{whoIsTyping: ''}"
              x-cloak
              x-init="
-                // listen for a whisper
+                Echo.private('chat')
+                    .listenForWhisper('typing', (data) => {
+                        whoIsTyping = data.username;
+                        setTimeout(() => whoIsTyping = '', 3000);
+                    })
              ">
             <div class="px-2 text-slate-400 text-sm italic " x-show="whoIsTyping.length >0">
                 <span x-text="whoIsTyping"></span> is typing...
@@ -71,7 +75,7 @@ on([
             placeholder="Quer falar algo jetete?!"
             wire:model="message"
             wire:keydown.enter.prevent="save"
-            @keydown="// whisper to the channel"
+            @keydown="Echo.private('chat').whisper('typing', {username: '{{ auth()->user()->username }}'})"
         />
         <x-chat-btn>Manda</x-chat-btn>
     </x-slot:form>
