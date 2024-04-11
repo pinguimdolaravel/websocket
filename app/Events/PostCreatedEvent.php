@@ -27,7 +27,6 @@ class PostCreatedEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('blog'),
             new PrivateChannel('app'),
         ];
     }

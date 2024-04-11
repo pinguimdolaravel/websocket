@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Livewire\BlogPost;
 
+use App\Events\PostUpdatedEvent;
 use App\Models\BlogPost;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
@@ -71,6 +72,8 @@ class Edit extends Component implements HasForms
         $data = $this->form->getState();
 
         $this->record->update($data);
+
+        PostUpdatedEvent::dispatch(auth()->user()->username, $this->record->id);
     }
 
     public function render(): View
