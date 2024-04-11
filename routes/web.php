@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Volt::route('blog-posts', 'pages.blog-posts.table')->name('blog-posts');
     Volt::route('blog-posts/create', 'pages.blog-posts.create')->name('blog-posts.create');
     Volt::route('blog-posts/edit/{post}', 'pages.blog-posts.edit')->name('blog-posts.edit');
+    Volt::route('downloads', 'pages.downloads')->name('downloads');
 });
 
 require __DIR__ . '/auth.php';
