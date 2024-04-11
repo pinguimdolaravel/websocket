@@ -38,4 +38,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ChatMessage::class);
     }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(BlogPost::class);
+    }
 }

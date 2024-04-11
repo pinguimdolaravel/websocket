@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Database\Seeders;
 
+use App\Models\BlogPost;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($anime as $username) {
-            User::factory()->create(['name' => $username, 'email' => str($username)->slug() . '@user.com', 'username' => str($username)->slug()]);
+            $user = User::factory()->create(['name' => $username, 'email' => str($username)->slug() . '@user.com', 'username' => str($username)->slug()]);
+
+            BlogPost::factory()->count(random_int(1, 10))->create(['user_id' => $user->id]);
         }
     }
 }
