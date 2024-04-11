@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Database\Seeders;
 
-use App\Models\ChatMessage;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,10 +12,19 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        for ($i = 1; $i <= 10; $i++) {
-            $user = User::factory()->create(['name' => 'User ' . $i, 'email' => $i . '@user.com']);
+        $anime = [
+            'Oliver Tsubasa', // Super Campeões
+            'Goku', // Dragon Ball
+            'Naruto', // Naruto
+            'Urameshi', // Yu Yu Hakusho
+            'Gon', // Hunter x Hunter
+            'Yuji Itadori', // Jujutsu Kaisen
+            'Deku', // My Hero Academia
+            'Monkey D Luffy', // One Piece
+        ];
 
-            //            ChatMessage::factory()->count(random_int(1, 20))->for($user)->create(['created_at' => now()->subMinutes(random_int(1, 60))]);
+        foreach ($anime as $username) {
+            User::factory()->create(['name' => $username, 'email' => str($username)->slug() . '@user.com', 'username' => str($username)->slug()]);
         }
     }
 }
