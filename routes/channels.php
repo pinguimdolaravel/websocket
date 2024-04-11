@@ -7,15 +7,3 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
-
-Broadcast::channel('chat', function (App\Models\User $user) {
-    return $user->only('id', 'username');
-});
-
-Broadcast::channel('blog', function (App\Models\User $user) {
-    return $user->only('id', 'username');
-});
-
-Broadcast::channel('app', function (App\Models\User $user) {
-    return $user->only('id', 'username');
-});

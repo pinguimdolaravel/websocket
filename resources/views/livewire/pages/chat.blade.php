@@ -6,7 +6,6 @@ use App\Models\ChatMessage;
 use App\Models\User;
 use App\Events\ChatMessageCreatedEvent;
 
-
 state(['whoIsHere' => [], 'message']);
 
 $messages = computed(fn() => ChatMessage::query()->oldest()->get());
@@ -24,21 +23,11 @@ $save = function () {
     }
     auth()->user()->messages()->create(['message' => $this->message]);
 
-    ChatMessageCreatedEvent::dispatch();
+    // dispatch event
     $this->reset('message');
-
 };
 
-$here = fn($whoIsHere) => $this->whoIsHere = $whoIsHere;
-$joining = fn($a) => $this->whoIsHere [] = $a;
-$leaving = fn($a) => $this->whoIsHere = array_filter($this->whoIsHere, fn($user) => $user['id'] != $a['id']);
-
-on([
-    'echo-private:chat,ChatMessageCreatedEvent' => '$refresh',
-    "echo-presence:chat,here" => 'here',
-    "echo-presence:chat,joining" => 'joining',
-    "echo-presence:chat,leaving" => 'leaving',
-]);
+// listeners and handlers
 
 ?>
 
@@ -59,15 +48,7 @@ on([
         <div x-data="{whoIsTyping: ''}"
              x-cloak
              x-init="
-                Echo
-                    .private('chat')
-                    .listenForWhisper(
-                        'typing',
-                        (e) => {
-                            whoIsTyping = e.username;
-                            setTimeout(() => whoIsTyping = '', 3000);
-                        }
-                    );
+                // listen for a whisper
              ">
             <div class="px-2 text-slate-400 text-sm italic " x-show="whoIsTyping.length >0">
                 <span x-text="whoIsTyping"></span> is typing...
@@ -80,7 +61,7 @@ on([
             placeholder="Quer falar algo jetete?!"
             wire:model="message"
             wire:keydown.enter.prevent="save"
-            @keydown="Echo.private('chat').whisper('typing', {username: '{{ auth()->user()->username }}'})"
+            @keydown="// whisper to the channel"
         />
         <x-chat-btn>Manda</x-chat-btn>
     </x-slot:form>

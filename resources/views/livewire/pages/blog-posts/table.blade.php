@@ -5,24 +5,6 @@ use Filament\Notifications\Notification;
 use Filament\Notifications\Actions\Action;
 use App\Jobs\ExportBlogPostsJob;
 
-$notifyUser = function ($args) {
-    if ($args['by'] === auth()->user()->username) {
-        return;
-    }
-
-    Notification::make()
-        ->title($args['message'])
-        ->actions([
-            Action::make('Reload Table')
-                ->button()
-                ->dispatch('reloadTable')
-        ])
-        ->success()
-        ->send();
-};
-
-$reloadTable = fn() => $this->redirectRoute('blog-posts');
-
 $download = function () {
     $user = auth()->user();
 
@@ -33,13 +15,6 @@ $download = function () {
         ->info()
         ->send();
 };
-
-on([
-    'reloadTable' => 'reloadTable',
-    'echo-private:blog,PostCreatedEvent' => 'notifyUser',
-    'echo-private:blog,PostUpdatedEvent' => 'notifyUser',
-    'echo-private:app,DownloadCreatedEvent' => 'notifyUser',
-]);
 
 ?>
 
