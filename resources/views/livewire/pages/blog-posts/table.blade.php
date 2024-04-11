@@ -1,8 +1,32 @@
 <?php
 
-use function Livewire\Volt\{state};
+use function Livewire\Volt\{state, on};
+use Filament\Notifications\Notification;
+use Filament\Notifications\Actions\Action;
 
-state();
+$notifyUser = function ($args) {
+    if ($args['by'] === auth()->user()->username) {
+        return;
+    }
+
+    Notification::make()
+        ->title($args['message'])
+        ->actions([
+            Action::make('Reload Table')
+                ->button()
+                ->dispatch('reloadTable')
+        ])
+        ->success()
+        ->send();
+};
+
+$reloadTable = fn() => $this->redirectRoute('blog-posts');
+
+on([
+    'reloadTable' => 'reloadTable',
+    'echo-private:blog,PostCreatedEvent' => 'notifyUser',
+    'echo-private:blog,PostUpdatedEvent' => 'notifyUser',
+]);
 
 ?>
 

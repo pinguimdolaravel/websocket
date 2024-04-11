@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Livewire\BlogPost;
 
+use App\Events\PostCreatedEvent;
 use App\Models\BlogPost;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
@@ -54,6 +55,8 @@ class Create extends Component implements HasForms
         $record = auth()->user()->posts()->create($data);
 
         $this->form->model($record)->saveRelationships();
+
+        PostCreatedEvent::dispatch(auth()->user()->username);
 
         $this->redirectRoute('blog-posts');
     }
