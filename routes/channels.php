@@ -15,3 +15,7 @@ Broadcast::channel('chat', function (App\Models\User $user) {
 Broadcast::channel('blog', function (App\Models\User $user) {
     return $user->only('id', 'username');
 });
+
+Broadcast::channel('app', function (App\Models\User $user) {
+    return $user->only('id', 'username');
+});

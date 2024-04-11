@@ -22,9 +22,13 @@ class Downloads extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Download::query())
+            ->query(
+                Download::query()
+                    ->where('user_id', auth()->id())
+            )
             ->columns([
-                Tables\Columns\TextColumn::make('link'),
+                Tables\Columns\TextColumn::make('link')
+                    ->url(fn (Download $download): string => route('download', $download)),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Requested By'),
             ])
