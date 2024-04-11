@@ -1,5 +1,6 @@
 <?php
 
+use Filament\Notifications\Notification;
 use function Livewire\Volt\{state, computed, rules, on, mount};
 use App\Models\ChatMessage;
 use App\Models\User;
@@ -25,6 +26,7 @@ $save = function () {
 
     ChatMessageCreatedEvent::dispatch();
     $this->reset('message');
+
 };
 
 $here = fn($whoIsHere) => $this->whoIsHere = $whoIsHere;
