@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 
+use App\Models\BlogPost;
 use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -14,5 +15,9 @@ Broadcast::channel('chat', function (User $user) {
 });
 
 Broadcast::channel('app', function (User $user) {
+    return $user->only('id', 'username');
+});
+
+Broadcast::channel('blog.{post}', function (User $user, BlogPost $post) {
     return $user->only('id', 'username');
 });
