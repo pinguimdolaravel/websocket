@@ -23,7 +23,7 @@ class Table extends Component implements HasForms, HasTable
     public function table(FilamentTable $table): FilamentTable
     {
         return $table
-            ->query(BlogPost::query())
+            ->query(BlogPost::query()->latest())
             ->columns([
                 Tables\Columns\TextColumn::make('title'),
                 Tables\Columns\TextColumn::make('body')->wrap(),
