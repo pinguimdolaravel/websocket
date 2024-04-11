@@ -15,7 +15,9 @@ Route::view('profile', 'profile')
 
 Route::middleware('auth')->group(function () {
     Volt::route('chat', 'pages.chat')->name('chat');
-    Volt::route('blog-posts', 'pages.blog-posts')->name('blog-posts');
+    Volt::route('blog-posts', 'pages.blog-posts.table')->name('blog-posts');
+    Volt::route('blog-posts/create', 'pages.blog-posts.create')->name('blog-posts.create');
+    Volt::route('blog-posts/edit/{post}', 'pages.blog-posts.edit')->name('blog-posts.edit');
 });
 
 require __DIR__ . '/auth.php';
