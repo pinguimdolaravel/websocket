@@ -16,14 +16,19 @@ class ChatMessageCreatedEvent implements ShouldBroadcast
     use InteractsWithSockets;
     use SerializesModels;
 
-    public function __construct()
-    {
+    public ?string $message = null;
+
+    public function __construct(
+        public string $by
+    ) {
+        $this->message = "{$this->by} sent a new message";
     }
 
     public function broadcastOn(): array
     {
         return [
             new PrivateChannel('chat'),
+            new PrivateChannel('app'),
         ];
     }
 }

@@ -23,7 +23,7 @@ $save = function () {
     }
     auth()->user()->messages()->create(['message' => $this->message]);
 
-    ChatMessageCreatedEvent::dispatch();
+    ChatMessageCreatedEvent::dispatch(auth()->user()->username);
 
     $this->reset('message');
 };
@@ -31,7 +31,6 @@ $save = function () {
 $here = fn($whoIsHere) => $this->whoIsHere = $whoIsHere;
 $joining = fn($whoIsJoining) => $this->whoIsHere [] = $whoIsJoining;
 $leaving = fn($whoIsLeaving) => $this->whoIsHere = array_filter($this->whoIsHere, fn($i) => $i['id'] != $whoIsLeaving['id']);
-
 
 on([
     'echo-private:chat,ChatMessageCreatedEvent' => '$refresh',

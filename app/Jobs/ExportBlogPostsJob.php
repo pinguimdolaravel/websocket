@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Jobs;
 
+use App\Events\DownloadCreatedEvent;
 use App\Exports\BlogPostsExport;
 use App\Models\Download;
 use Illuminate\Bus\Queueable;
@@ -42,8 +43,8 @@ class ExportBlogPostsJob implements ShouldQueue
             'link'    => $name,
         ]);
 
-        sleep(2);
+        sleep(3);
 
-        // dispatch event
+        DownloadCreatedEvent::dispatch($this->username);
     }
 }
